@@ -156,6 +156,7 @@ export default function Services() {
       id="produkty"
       className="relative py-24 lg:py-32 bg-[#0f172a] overflow-hidden"
     >
+      <span id="speciality" className="sr-only" />
       {/* Top separator line */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
 

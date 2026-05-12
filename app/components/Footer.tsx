@@ -91,7 +91,7 @@ export default function Footer() {
             © {year} Elektro Černíček s.r.o. Všechna práva vyhrazena.
           </p>
           <p className="text-xs text-slate-700">
-            Brumov-Bylnice · IČO: registrováno v OR
+            Brumov-Bylnice · IČO: registrováno v ČR
           </p>
         </div>
       </div>
