@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
-import { Phone, MapPin, Clock, ExternalLink } from "lucide-react";
+import { Phone, MapPin, Clock, ExternalLink, Mail } from "lucide-react";
 
 const phones = [
   { number: "577 330 485", href: "tel:577330485", label: "Pevná linka" },
@@ -154,6 +154,24 @@ export default function Contact() {
                       </div>
                     ))}
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Email card */}
+            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/[0.07] backdrop-blur-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 text-blue-400" />
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-slate-500 mb-1">E-mail</p>
+                  <a
+                    href="mailto:cerniceksro@seznam.cz"
+                    className="text-white font-semibold hover:text-blue-400 transition-colors duration-200 break-all"
+                  >
+                    cerniceksro@seznam.cz
+                  </a>
                 </div>
               </div>
             </div>
