@@ -1,8 +1,37 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
-import { motion } from "motion/react";
+import { useRef, useState, useCallback, useEffect } from "react";
+import { motion, animate, useInView } from "motion/react";
 import { ArrowRight, Phone, MapPin, ChevronDown } from "lucide-react";
+
+function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
+  const [display, setDisplay] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (!isInView) return;
+    const controls = animate(0, target, {
+      duration: 2,
+      ease: "easeOut",
+      onUpdate(v) {
+        setDisplay(Math.round(v));
+      },
+    });
+    return () => controls.stop();
+  }, [isInView, target]);
+
+  const formatted =
+    display >= 1000
+      ? `${Math.floor(display / 1000)} ${String(display % 1000).padStart(3, "0")}`
+      : String(display);
+
+  return (
+    <span ref={ref}>
+      {formatted}{suffix}
+    </span>
+  );
+}
 
 function MagneticButton() {
   const ref = useRef<HTMLAnchorElement>(null);
@@ -26,10 +55,23 @@ function MagneticButton() {
       href="tel:577330485"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      animate={{ x: pos.x, y: pos.y }}
-      transition={{ type: "spring", stiffness: 180, damping: 16, mass: 0.6 }}
+      animate={{
+        x: pos.x,
+        y: pos.y,
+        boxShadow: [
+          "0 0 18px 3px rgba(59,130,246,0.35)",
+          "0 0 36px 8px rgba(59,130,246,0.65)",
+          "0 0 18px 3px rgba(59,130,246,0.35)",
+        ],
+      }}
+      transition={{
+        x: { type: "spring", stiffness: 180, damping: 16, mass: 0.6 },
+        y: { type: "spring", stiffness: 180, damping: 16, mass: 0.6 },
+        boxShadow: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
+      }}
       whileTap={{ scale: 0.97 }}
-      className="group relative flex items-center gap-3 px-8 py-4 bg-blue-500 hover:bg-blue-400 text-white font-bold text-base rounded-2xl transition-colors duration-200 shadow-2xl shadow-blue-500/30 select-none cursor-pointer"
+      style={{ willChange: "transform" }}
+      className="group relative flex items-center gap-3 px-8 py-4 bg-blue-500 hover:bg-blue-400 text-white font-bold text-base rounded-2xl transition-colors duration-200 select-none cursor-pointer"
     >
       <Phone className="w-5 h-5" />
       Zavolejte nám
@@ -46,9 +88,9 @@ const headingWords = [
 ];
 
 const stats = [
-  { value: "17+", label: "Roků zkušeností" },
-  { value: "1 000+", label: "Spokojených zákazníků" },
-  { value: "50+", label: "Značek v nabídce" },
+  { target: 17, suffix: "+", label: "Roků zkušeností" },
+  { target: 1000, suffix: "+", label: "Spokojených zákazníků" },
+  { target: 50, suffix: "+", label: "Značek v nabídce" },
 ];
 
 export default function Hero() {
@@ -183,7 +225,9 @@ export default function Hero() {
                 transition={{ duration: 0.5, delay: 1.6 + i * 0.1, ease: "easeOut" }}
                 className="flex flex-col items-center gap-1"
               >
-                <span className="text-2xl sm:text-3xl font-black text-white">{stat.value}</span>
+                <span className="text-2xl sm:text-3xl font-black text-white tabular-nums">
+                  <CountUp target={stat.target} suffix={stat.suffix} />
+                </span>
                 <span className="text-xs sm:text-sm text-slate-500 text-center">{stat.label}</span>
               </motion.div>
             ))}

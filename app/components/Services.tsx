@@ -79,16 +79,14 @@ function ServiceCard({
   return (
     <motion.article
       variants={cardVariants}
-      whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
-      className="group relative flex flex-col p-7 lg:p-8 rounded-2xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.07] hover:border-blue-500/40 transition-all duration-300 overflow-hidden"
-      style={{ willChange: "transform" }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.boxShadow =
-          "0 0 0 1px rgba(59,130,246,0.15), 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(59,130,246,0.08)";
+      whileHover={{
+        y: -6,
+        scale: 1.02,
+        boxShadow:
+          "0 0 0 1px rgba(59,130,246,0.35), 0 24px 64px rgba(0,0,0,0.5), 0 0 48px rgba(59,130,246,0.14)",
+        transition: { duration: 0.25, ease: "easeOut" },
       }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.boxShadow = "none";
-      }}
+      className="group relative flex flex-col p-7 lg:p-8 rounded-2xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.07] hover:border-blue-500/40 transition-colors duration-300 overflow-hidden will-change-transform"
     >
       {/* Top-right glow on hover */}
       <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-blue-500/0 group-hover:bg-blue-500/[0.06] blur-2xl transition-all duration-500 pointer-events-none" />
